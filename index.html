@@ -30,7 +30,7 @@
           </div>
 
           <div class="content">
-            <table-product :prop-products="paginationProductComputed" :prop-products-selected="productsSelected" @emit-click-selected-product="onSelectedProducts"></table-product>
+            <table-product :prop-products="paginationProductComputed" :prop-products-selected="productsSelected" @emit-click-selected-product="onSelectedProducts" @emit-click-selected-all="onSelectedProductsAll"></table-product>
           </div>
 
           <div class="footer">

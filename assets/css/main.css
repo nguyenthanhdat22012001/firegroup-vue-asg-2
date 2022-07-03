@@ -363,6 +363,7 @@ h4 {
 .product-table__custom-checkbox::after {
   position: absolute;
   content: "";
+  cursor: pointer;
   top: -1px;
   left: -1px;
   width: 16px;

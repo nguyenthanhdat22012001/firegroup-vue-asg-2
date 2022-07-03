@@ -64,13 +64,17 @@ Vue.component("table-product", {
       };
       this.$emit("emit-click-selected-product", data);
     },
+    onClickSeclectedAll(event) {
+      let isChecked = event.target.checked;
+      this.$emit("emit-click-selected-all", isChecked);
+    },
   },
   template: ` <div class="product-table">
 <table>
   <thead>
       <tr>
           <th>
-           <input type="checkbox"  class="product-table__checkbox product-table__custom-checkbox" :class="{active : propProductsSelected.length > 0}" :checked="propProductsSelected.length > 0" />
+           <input type="checkbox" @input="onClickSeclectedAll($event)"  class="product-table__checkbox" :checked="propProductsSelected.length > 0" />
           </th>
           <th v-show="propProductsSelected.length == 0">Product</th>
           <th v-show="propProductsSelected.length > 0 ">{{propProductsSelected.length}} product selected</th>
@@ -217,6 +221,18 @@ var vm = new Vue({
     },
     onSelectedProducts(data) {
       this.onUpdateProductsSelectedInLocalStorage(data);
+    },
+    onSelectedProductsAll(isSelectAll) {
+      // console.log(isSelectAll)
+      const data = this.products;
+      let newData = new Array();
+      if(isSelectAll){
+         [...data].forEach(item => {
+          newData.push(item.id);
+        });
+      }
+      this.onSetProductsSelectedInLocalStorage(newData);
+      this.productsSelected = newData;
     },
   },
   computed: {
