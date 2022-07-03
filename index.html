@@ -1,157 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./assets/css/reset.css">
-    <link rel="stylesheet" href="./assets/css/main.css">
-</head>
-<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <link rel="stylesheet" href="./assets/css/main.css" />
+  </head>
+  <body>
     <div id="app">
-        <div class="wrapper">
-            <div class="container">
-                <h4>Add New Facebook Pixel</h4>
-                <div class="tabs main">
-                    <div class="tabs__list">
-                        <div class="form__group-radio flex-center" :class="{active : tabsAction}">
-                            <input type="radio"  class="form__input-radio" id="radio-1" name="action"  @click="onChangeTabs(true)" :checked="tabsAction">
-                            <label for="radio-1" class="form__label form__label-radio">Auto input pixel</label>
-                        </div>
-                        <div class="form__group-radio flex-center" :class="{active : !tabsAction}">
-                            <input type="radio" class="form__input-radio"  id="radio-2" name="action" @click="onChangeTabs(false)" :checked="!tabsAction">
-                            <label for="radio-2" class="form__label form__label-radio">Manual input pixel</label>
-                        </div>
-                    </div>
-                    <div class="tabs__content" v-if="tabsAction">
-                        <div class="tabs__account">
-                            <div class="tabs__account-left">
-                                <img src="./assets/images/avatar.png" alt="">
-                                <div class="tabs__account-title">
-                                    <h5  class="tabs__account-name">Lotusprayer Store</h5>
-                                    <button class="btn btn--medium btn--icon-text btn--green">
-                                        <svg width="12" height="9" viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10.1953 0.46875L4.03125 6.63281L1.78125 4.35938C1.66406 4.26562 1.47656 4.26562 1.38281 4.35938L0.703125 5.03906C0.609375 5.13281 0.609375 5.32031 0.703125 5.4375L3.84375 8.55469C3.96094 8.67188 4.125 8.67188 4.24219 8.55469L11.2734 1.52344C11.3672 1.42969 11.3672 1.24219 11.2734 1.125L10.5938 0.46875C10.5 0.351562 10.3125 0.351562 10.1953 0.46875Z" fill="#35B26F"/>
-                                        </svg>
-                                       <span> Connected</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="tabs__account-right">
-                                <button class="btn btn--none-border">Change Account</button>
-                            </div>
-                        </div>
-                        <form class="form">
-                            <div class="form__group">
-                                <label for="Account" class="form__label">Select Business Account</label>
-                                <select id="Account" class="form__select" v-model="SelectedBusinessAccount">
-                                    <option value="">Select your Business Account</option>
-                                    <option v-for="(item, index) in listBusinessAccount" :key="item.id" :value="item.id">{{`${item.id} - ${item.name}`}}</option>
-                                </select>
-                            </div>
-                            <div class="form__group">
-                                <label for="Account" class="form__label">Select Pixel</label>
-                                <select id="Account" class="form__select" :disabled="listPixelAccountFilter.length == 0">
-                                    <option value="">Select your pixel</option>
-                                    <option v-for="(item, index) in listPixelAccountFilter" :key="item.id" :value="item.id">{{item.name}}</option>
-                                </select>
-                                    <div class="alert alert--error" v-show="isShowAlert">
-                                        <img class="alert__icon" src="./assets/images/close-circle.svg" alt="">
-                                        <div class="alert__content">
-                                            <div class="alert__title">
-                                                Missing pixel
-                                            </div>
-                                            <div class="alert__message">
-                                                You don’t have any Facebook Pixels in this Business Account. Change Business Account or <a href="#" class="alert__link">Create New Facebook Pixel</a> first.
-                                            </div>
-                                        </div>
-                                    </div>
-                            </div>
-                            <div class="form__group">
-                                <label for="Account" class="form__label">Target</label>
-                                <select id="Account" class="form__select">
-                                    <option value="">Entire page</option>
-                                </select>
-                            </div>
-                        </form>
-                        <div class="Conversion">
-                            <div class="Conversion__left">
-                                <h5 class="Conversion__title">Conversion API</h5>
-                                <p class="Conversion__content">
-                                    Facebook conversions API will help you collect accurate data and improve the performance of your Facebook ads in a post-iOS 14 update world. <a href="#" class="Conversion__link">Learn more</a>
-                                </p>
-                            </div>
-                            <div class="Conversion__right">
-                                <input type="checkbox" name="" class="form__checkbox">
-                            </div>
-                        </div>
-                        <div class="alert alert--none-message alert--border-warning">
-                            <img class="alert__icon" src="./assets/images/bell.svg" alt="">
-                            <div class="alert__content">
-                                <div class="alert__title">
-                                    Please <span class="text-strong">UPGRADE</span> your plan to use Conversion API
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tabs__list-btn">
-                            <button class="btn btn--border-gray" @click="onClickResetAutoTabs()">Cancel</button>
-                            <button class="btn btn--blues">Save</button>
-                        </div>
-                    </div>
-                    <div class="tabs__content" v-else>
-                        <form class="from">
-                            <div class="form__group">
-                                <label for="name-pixel" class="form__label">Name this pixel</label>
-                                <input class="form__input" type="text" id="name-pixel" placeholder="Input your pixel name" v-model="pixelName">
-                                <div class="validate validate__title" v-show="validate">{{error.pixelName}}</div>
-                            </div>
-                            <div class="form__group">
-                                <label for="pixel-id" class="form__label">Enter Facebook Pixel ID</label>
-                                <input class="form__input" type="text" id="pixel-id" placeholder="Input your pixel id" v-model="pixelID">
-                                <div class="validate validate__title" v-show="validate">{{error.pixelID}}</div>
-                            </div>
-                            <div class="form__group">
-                                <label for="Account" class="form__label">Target</label>
-                                <select id="Account" class="form__select">
-                                    <option value="">Entire page</option>
-                                </select>
-                            </div>
-                        </form>
-                        <div class="Conversion">
-                            <div class="Conversion__left">
-                                <h5 class="Conversion__title">Conversion API</h5>
-                                <p class="Conversion__content">
-                                    Facebook conversions API will help you collect accurate data and improve the performance of your Facebook ads in a post-iOS 14 update world. <a href="#" class="Conversion__link">Learn more</a>
-                                </p>
-                            </div>
-                            <div class="Conversion__right">
-                                <input type="checkbox" name="" class="form__checkbox">
-                            </div>
-                        </div>
-                        <div class="alert alert--none-message alert--border-warning">
-                            <img class="alert__icon" src="./assets/images/bell.svg" alt="">
-                            <div class="alert__content">
-                                <div class="alert__title">
-                                    Please <span class="text-strong">UPGRADE</span> your plan to use Conversion API
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tabs__list-btn">
-                            <button class="btn btn--border-gray">Cancel</button>
-                            <button class="btn btn--blues" @click="onSaveTabsManual()">Save</button>
-                        </div>
-                    </div>
-                </div>
-              
+      <div class="wrapper">
+        <div class="container">
+          <h6>Add product</h6>
+
+          <div class="header">
+            <div class="header__input">
+              <input-search @emit-change-text-search="onFilterProduct"></input-search>
             </div>
+            <div class="header__select">
+              <select-sort  @emit-change-select-sort="onSortProduct"></select-sort>
+            </div>
+          </div>
+
+          <div class="content">
+            <table-product :prop-products="paginationProductComputed" :prop-products-selected="productsSelected" @emit-click-selected-product="onSelectedProducts"></table-product>
+          </div>
+
+          <div class="footer">
+            <div class="list-btn">
+              <div class="list-btn__left">
+                <button class="btn btn--icon-text" @click="onClickPagingPrev()" :disabled="currentPage == 1">
+                  <svg
+                    width="6"
+                    height="10"
+                    viewBox="0 0 6 10"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M5 9L1 4.99161L5 1"
+                      stroke="#8F90A6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  Prev
+                </button>
+                <button class="btn btn--icon-text" @click="onClickPagingNext()" :disabled="currentPage == numberPage">
+                  Next
+                  <svg
+                    width="6"
+                    height="10"
+                    viewBox="0 0 6 10"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M1 1L5 4.99161L1 9"
+                      stroke="#8F90A6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div class="list-btn__right">
+                <button class="btn btn--border-gray">Cancel</button>
+                <button class="btn btn--orange">Save</button>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
-    <script src="./js/main.js"></script>
-</body>
+    <script src="./main.js"></script>
+  </body>
 </html>

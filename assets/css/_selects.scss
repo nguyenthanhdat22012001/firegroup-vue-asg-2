@@ -1,0 +1,23 @@
+.select{
+    padding: 8px 13px 8px 10px;
+    @include flexbox(center);
+    gap:7px;
+
+    &__label{
+        color: $text-gray;
+    }
+    &__sort{
+        width: 100%;
+        border: none;
+        padding: 4px 0;
+        background-color: transparent;
+        appearance:none;
+        background-image: url(../images/sort.svg);
+        background-repeat: no-repeat;
+        background-position-x: 100%;
+        background-position-y: 5px;
+        &:focus {
+            outline: none;
+        }
+    }
+}
