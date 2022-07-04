@@ -29,12 +29,12 @@
 
   &__custom-checkbox{
     position: relative;
-    appearance:none;
-    z-index: 1;
-    border-radius: 3px;
+    // appearance:none;
+    // z-index: 1;
+    // border-radius: 3px;
   }
 
-  &__custom-checkbox::after{
+  &__custom-checkbox:checked::after{
     position: absolute;
     content: "";
     cursor: pointer;
@@ -43,10 +43,10 @@
     width: 16px;
     height: 16px;
     background: $bgr-orange url(../images/Indeterminate.svg) no-repeat;
-    background-position: 50% 60%;
+    background-position: 50% 100%;
     z-index: 2;
-    border-radius: inherit;
-    display: none;
+    border-radius: 3px;
+    // display: none;
   }
   &__custom-checkbox.active::after{
     display: block;

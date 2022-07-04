@@ -352,14 +352,9 @@ h4 {
 
 .product-table__custom-checkbox {
   position: relative;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  z-index: 1;
-  border-radius: 3px;
 }
 
-.product-table__custom-checkbox::after {
+.product-table__custom-checkbox:checked::after {
   position: absolute;
   content: "";
   cursor: pointer;
@@ -368,10 +363,9 @@ h4 {
   width: 16px;
   height: 16px;
   background: #F65E5D url(../images/Indeterminate.svg) no-repeat;
-  background-position: 50% 60%;
+  background-position: 50% 100%;
   z-index: 2;
-  border-radius: inherit;
-  display: none;
+  border-radius: 3px;
 }
 
 .product-table__custom-checkbox.active::after {

@@ -74,7 +74,7 @@ Vue.component("table-product", {
   <thead>
       <tr>
           <th>
-           <input type="checkbox" @input="onClickSeclectedAll($event)"  class="product-table__checkbox" :checked="propProductsSelected.length > 0" />
+           <input type="checkbox" @input="onClickSeclectedAll($event)"  class="product-table__checkbox product-table__custom-checkbox" :checked="propProductsSelected.length > 0" />
           </th>
           <th v-show="propProductsSelected.length == 0">Product</th>
           <th v-show="propProductsSelected.length > 0 ">{{propProductsSelected.length}} product selected</th>
