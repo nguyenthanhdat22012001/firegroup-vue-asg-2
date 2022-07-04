@@ -97,8 +97,8 @@ Vue.component("table-product", {
               </div>
           </div>
       </td>
-      <td>
-          {{item.price}}
+      <td width="90px">
+           $ {{item.price}}
       </td>
     </tr>
     
