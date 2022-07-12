@@ -39,14 +39,14 @@ Vue.component("SelectSort", {
 });
 
 Vue.component("TableProduct", {
-  props: ["propProducts", "propProductsSelected"],
-  propProducts: {
+  props: ["prop_products", "prop_products_selected"],
+  prop_products: {
     type: Array,
     default: function () {
       return [];
     },
   },
-  propProductsSelected: {
+  prop_products_selected: {
     type: Array,
     default: function () {
       return [];
@@ -70,18 +70,18 @@ Vue.component("TableProduct", {
   <thead>
       <tr>
           <th>
-           <input type="checkbox" @input="onClickSeclectedAll($event)"  class="product-table__checkbox product-table__custom-checkbox" :checked="propProductsSelected.length > 0" />
+           <input type="checkbox" @input="onClickSeclectedAll($event)"  class="product-table__checkbox product-table__custom-checkbox" :checked="prop_products_selected.length > 0" />
           </th>
-          <th v-show="propProductsSelected.length == 0">Product</th>
-          <th v-show="propProductsSelected.length > 0 ">{{propProductsSelected.length}} product selected</th>
+          <th v-show="prop_products_selected.length == 0">Product</th>
+          <th v-show="prop_products_selected.length > 0 ">{{prop_products_selected.length}} product selected</th>
           <th>Price</th>
         </tr>
   </thead>
 
   <tbody>
-    <tr v-for="(item, index) in propProducts" :key="item.id">
+    <tr v-for="(item, index) in prop_products" :key="item.id">
       <td>
-        <input @input="onClickSeclected($event)" type="checkbox" class="product-table__checkbox" :value="item.id" :checked="propProductsSelected.length > 0 && propProductsSelected.includes(item.id)"/>
+        <input @input="onClickSeclected($event)" type="checkbox" class="product-table__checkbox" :value="item.id" :checked="prop_products_selected.length > 0 && prop_products_selected.includes(item.id)"/>
 
       </td>
       <td>
@@ -108,15 +108,15 @@ var vm = new Vue({
   emits: ["emit-input", "emit-select-sort", "emit-click-selected-product"],
   data: {
     products: [],
-    productsSelected: [],
+    products_selected: [],
     // data pagination
-    totalProduct: 1,
-    currentPage: 1,
-    numberPage: 1,
+    total_product: 1,
+    current_page: 1,
+    number_page: 1,
     limit: 10,
     // data search
-    filterProduct: {
-      isFilter: false,
+    filter_product: {
+      is_filter: false,
       data: [],
     },
     // data sort
@@ -145,17 +145,17 @@ var vm = new Vue({
     },
     updatePage(data) {
       let dataLength = [...data].length;
-      this.totalProduct = dataLength;
-      this.numberPage = Math.ceil(dataLength / this.limit);
+      this.total_product = dataLength;
+      this.number_page = Math.ceil(dataLength / this.limit);
     },
     onClickPagingPrev() {
-      if (this.currentPage > 1) {
-        this.currentPage = this.currentPage - 1;
+      if (this.current_page > 1) {
+        this.current_page = this.current_page - 1;
       }
     },
     onClickPagingNext() {
-      if (this.currentPage < this.numberPage) {
-        this.currentPage = this.currentPage + 1;
+      if (this.current_page < this.number_page) {
+        this.current_page = this.current_page + 1;
       }
     },
     onFilterProduct(value) {
@@ -165,18 +165,18 @@ var vm = new Vue({
           item.id.toLowerCase().includes(value.toLowerCase())
       );
 
-      this.filterProduct = {
-        isFilter: true,
+      this.filter_product = {
+        is_filter: true,
         data: data,
       };
-      this.currentPage = 1;
+      this.current_page = 1;
       this.updatePage(data);
     },
     onSortProduct(value) {
-      if (this.filterProduct.isFilter) {
-        this.filterProduct.data = this.handleSortProduct(
+      if (this.filter_product.is_filter) {
+        this.filter_product.data = this.handleSortProduct(
           value,
-          this.filterProduct.data
+          this.filter_product.data
         );
       } else {
         this.products = this.handleSortProduct(value, this.products);
@@ -215,15 +215,15 @@ var vm = new Vue({
       }
 
       this.onSetProductsSelectedInLocalStorage(data);
-      this.productsSelected = data;
+      this.products_selected = data;
     },
     onSelectedProducts(data) {
       this.onUpdateProductsSelectedInLocalStorage(data);
     },
     onSelectedProductsAll(isSelectAll) {
       let data = this.products;
-      if (this.filterProduct.isFilter) {
-        data = this.filterProduct.data;
+      if (this.filter_product.is_filter) {
+        data = this.filter_product.data;
       }
       let newData = new Array();
       if (isSelectAll) {
@@ -232,16 +232,16 @@ var vm = new Vue({
         });
       }
       this.onSetProductsSelectedInLocalStorage(newData);
-      this.productsSelected = newData;
+      this.products_selected = newData;
     },
   },
   computed: {
     paginationProductComputed: function () {
-      let start = (this.currentPage - 1) * this.limit;
-      let end = this.currentPage * this.limit;
+      let start = (this.current_page - 1) * this.limit;
+      let end = this.current_page * this.limit;
       let data = new Array();
-      if (this.filterProduct.isFilter) {
-        data = [...this.filterProduct.data];
+      if (this.filter_product.is_filter) {
+        data = [...this.filter_product.data];
       } else {
         data = [...this.products];
       }
@@ -250,7 +250,7 @@ var vm = new Vue({
     },
   },
   mounted() {
-    this.productsSelected = this.onGetProductsSelectedInLocalStorage();
+    this.products_selected = this.onGetProductsSelectedInLocalStorage();
     this.getListProductApi();
   },
 });
