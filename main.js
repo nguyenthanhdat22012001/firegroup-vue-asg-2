@@ -1,5 +1,9 @@
 Vue.component("InputSearch", {
   props: ["value"],
+  value: {
+    type: String,
+    default: "",
+  },
   computed: {
     input_computed: {
       get() {
@@ -101,11 +105,7 @@ Vue.component("TableProduct", {
 
 var vm = new Vue({
   el: "#app",
-  emits: [
-    "emit-input",
-    "emit-select-sort",
-    "emit-click-selected-product",
-  ],
+  emits: ["emit-input", "emit-select-sort", "emit-click-selected-product"],
   data: {
     products: [],
     productsSelected: [],
@@ -172,7 +172,7 @@ var vm = new Vue({
       this.currentPage = 1;
       this.updatePage(data);
     },
-    onSortProduct (value) {
+    onSortProduct(value) {
       if (this.filterProduct.isFilter) {
         this.filterProduct.data = this.handleSortProduct(
           value,
@@ -222,12 +222,12 @@ var vm = new Vue({
     },
     onSelectedProductsAll(isSelectAll) {
       let data = this.products;
-      if(this.filterProduct.isFilter){
-        data =  this.filterProduct.data ;
+      if (this.filterProduct.isFilter) {
+        data = this.filterProduct.data;
       }
       let newData = new Array();
-      if(isSelectAll){
-         [...data].forEach(item => {
+      if (isSelectAll) {
+        [...data].forEach((item) => {
           newData.push(item.id);
         });
       }
