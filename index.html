@@ -17,26 +17,41 @@
   <body>
     <div id="app">
       <div class="wrapper">
-        <div class="container">
+        <div class="container mt-50px">
           <h6>Add product</h6>
 
           <div class="header">
             <div class="header__input">
-              <input-search @emit-change-text-search="onFilterProduct"></input-search>
+              <input-search
+                value=""
+                @emit-input="onFilterProduct"
+              ></input-search>
             </div>
             <div class="header__select">
-              <select-sort  @emit-change-select-sort="onSortProduct"></select-sort>
+              <select-sort
+                :value="sortProduct"
+                @emit-select-sort="onSortProduct"
+              ></select-sort>
             </div>
           </div>
 
           <div class="content">
-            <table-product :prop-products="paginationProductComputed" :prop-products-selected="productsSelected" @emit-click-selected-product="onSelectedProducts" @emit-click-selected-all="onSelectedProductsAll"></table-product>
+            <table-product
+              :prop-products="paginationProductComputed"
+              :prop-products-selected="productsSelected"
+              @emit-click-selected-product="onSelectedProducts"
+              @emit-click-selected-all="onSelectedProductsAll"
+            ></table-product>
           </div>
 
           <div class="footer">
             <div class="list-btn">
               <div class="list-btn__left">
-                <button class="btn btn--icon-text" @click="onClickPagingPrev()" :disabled="currentPage == 1">
+                <button
+                  class="btn btn--icon-text"
+                  @click="onClickPagingPrev()"
+                  :disabled="currentPage == 1"
+                >
                   <svg
                     width="6"
                     height="10"
@@ -53,7 +68,11 @@
                   </svg>
                   Prev
                 </button>
-                <button class="btn btn--icon-text" @click="onClickPagingNext()" :disabled="currentPage == numberPage">
+                <button
+                  class="btn btn--icon-text"
+                  @click="onClickPagingNext()"
+                  :disabled="currentPage == numberPage"
+                >
                   Next
                   <svg
                     width="6"

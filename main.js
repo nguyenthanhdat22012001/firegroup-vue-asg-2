@@ -1,48 +1,40 @@
-Vue.component("input-search", {
-  data: function () {
-    return {
-      text_search: "",
-    };
-  },
-  watch: {
-    text_search: function (newValue) {
-      this.onChangeTextSearch(newValue);
+Vue.component("InputSearch", {
+  props: ["value"],
+  computed: {
+    input_computed: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.$emit("emit-input", value);
+      },
     },
   },
-  methods: {
-    onChangeTextSearch: function (value) {
-      this.$emit("emit-change-text-search", value);
-    },
-  },
-  template: `<input  v-model="text_search" class="input__search" type="search" placeholder="Search product by name, tag, id...">`,
+  template: `<input  v-model="input_computed" class="input__search" type="search" placeholder="Search product by name, tag, id...">`,
 });
 
-Vue.component("select-sort", {
-  data: function () {
-    return {
-      selectSort: "A-Z",
-    };
-  },
-  watch: {
-    selectSort: function (newValue) {
-      this.onChangeSelectSort(newValue);
-    },
-  },
-  methods: {
-    onChangeSelectSort: function (value) {
-      this.$emit("emit-change-select-sort", value);
+Vue.component("SelectSort", {
+  props: ["value"],
+  computed: {
+    select_computed: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.$emit("emit-select-sort", value);
+      },
     },
   },
   template: `<div class="select">
   <label class="select__label">sort:</label>
-  <select class="select__sort"  v-model="selectSort">
+  <select class="select__sort"  v-model="select_computed">
       <option value="A-Z">Product title A - Z</option>
       <option value="Z-A">Product title Z - A</option>
   </select>
   </div>`,
 });
 
-Vue.component("table-product", {
+Vue.component("TableProduct", {
   props: ["propProducts", "propProductsSelected"],
   propProducts: {
     type: Array,
@@ -110,8 +102,8 @@ Vue.component("table-product", {
 var vm = new Vue({
   el: "#app",
   emits: [
-    "emit-change-text-search",
-    "emit-change-select-sort",
+    "emit-input",
+    "emit-select-sort",
     "emit-click-selected-product",
   ],
   data: {
@@ -123,7 +115,6 @@ var vm = new Vue({
     numberPage: 1,
     limit: 10,
     // data search
-    searchText: "",
     filterProduct: {
       isFilter: false,
       data: [],
@@ -181,8 +172,15 @@ var vm = new Vue({
       this.currentPage = 1;
       this.updatePage(data);
     },
-    onSortProduct(value) {
-      this.sortProduct = value;
+    onSortProduct (value) {
+      if (this.filterProduct.isFilter) {
+        this.filterProduct.data = this.handleSortProduct(
+          value,
+          this.filterProduct.data
+        );
+      } else {
+        this.products = this.handleSortProduct(value, this.products);
+      }
     },
     handleSortProduct(key, data) {
       let newData = new Array();
@@ -223,8 +221,10 @@ var vm = new Vue({
       this.onUpdateProductsSelectedInLocalStorage(data);
     },
     onSelectedProductsAll(isSelectAll) {
-      // console.log(isSelectAll)
-      const data = this.products;
+      let data = this.products;
+      if(this.filterProduct.isFilter){
+        data =  this.filterProduct.data ;
+      }
       let newData = new Array();
       if(isSelectAll){
          [...data].forEach(item => {
@@ -249,19 +249,6 @@ var vm = new Vue({
       return newData;
     },
   },
-  watch: {
-    sortProduct: function (newValue) {
-      if (this.filterProduct.isFilter) {
-        this.filterProduct.data = this.handleSortProduct(
-          newValue,
-          this.filterProduct.data
-        );
-      } else {
-        this.products = this.handleSortProduct(newValue, this.products);
-      }
-    },
-  },
-
   mounted() {
     this.productsSelected = this.onGetProductsSelectedInLocalStorage();
     this.getListProductApi();
